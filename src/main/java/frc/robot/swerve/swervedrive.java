@@ -16,10 +16,11 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 public class swervedrive extends drivetrain{
     
     SwerveDriveKinematics kinematics;
-    swerveModule frontLeft;
+    swerveModule[] modules;
     swerveModule frontRight;
     swerveModule backLeft;
     swerveModule backRight; 
+    startPose = new Pose2d(5.0, 13.5, new Rotation2d());
 
     swervedrive(
         Translation2d[] moduleLocations, Spark[] steerMotors, TalonFX[] driveMotors, CANcoder[] encoders){
@@ -27,19 +28,15 @@ public class swervedrive extends drivetrain{
             kinematics = new SwerveDriveKinematics(moduleLocations[0],moduleLocations[1],moduleLocations[2],moduleLocations[3]);
 
             SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
-                kinematics, gyro.getRotation2d(),
-                new SwerveModulePosition[] {
-                  m_frontLeftModule.getPosition(),
-                  m_frontRightModule.getPosition(),
-                  m_backLeftModule.getPosition(),
-                  m_backRightModule.getPosition()
-                }, new Pose2d(5.0, 13.5, new Rotation2d())
-                );
-            
-            frontLeft  = new swerveModule(steerMotors[0], driveMotors[0], encoders[0]);
-            frontRight = new swerveModule(steerMotors[1], driveMotors[1], encoders[1]);
-            backLeft   = new swerveModule(steerMotors[2], driveMotors[2], encoders[2]);
-            backRight  = new swerveModule(steerMotors[3], driveMotors[3], encoders[3]);
+                kinematics, gyro.getRotation2d(), moduleLocations, startPose
+            );
+
+            modules = {
+                new swerveModule(steerMotors[0], driveMotors[0], encoders[0]),
+                new swerveModule(steerMotors[1], driveMotors[1], encoders[1]),
+                new swerveModule(steerMotors[2], driveMotors[2], encoders[2]),
+                new swerveModule(steerMotors[3], driveMotors[3], encoders[3])
+            };
         }
 
         public void setVelocity(ChassisSpeeds speeds){

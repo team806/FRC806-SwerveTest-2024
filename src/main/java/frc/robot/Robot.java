@@ -4,7 +4,13 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenixpro.hardware.CANcoder;
+
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.swerve.drivetrain;
@@ -15,8 +21,14 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
-  drivetrain m_drivetrain = new swervedrive();
-
+  drivetrain m_drivetrain = new swervedrive(
+    new Translation2d[] {new Translation2d(),new Translation2d(),new Translation2d(),new Translation2d()}, 
+    new Spark[] {new Spark(0),new Spark(0),new Spark(0),new Spark(0)}, 
+    new TalonFX [] {new TalonFX(0),new TalonFX(0),new TalonFX(0),new TalonFX(0)}, 
+    new CANcoder[] {new CANcoder(0),new CANcoder(0),new CANcoder(0),new CANcoder(0)}, 
+    new ADIS16470_IMU()
+  );
+  
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
