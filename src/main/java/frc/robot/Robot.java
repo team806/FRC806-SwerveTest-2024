@@ -4,13 +4,14 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenixpro.hardware.CANcoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.swerve.drivetrain;
@@ -23,10 +24,11 @@ public class Robot extends TimedRobot {
 
   drivetrain m_drivetrain = new swervedrive(
     new Translation2d[] {new Translation2d(),new Translation2d(),new Translation2d(),new Translation2d()}, 
-    new Spark[] {new Spark(0),new Spark(0),new Spark(0),new Spark(0)}, 
-    new TalonFX [] {new TalonFX(0),new TalonFX(0),new TalonFX(0),new TalonFX(0)}, 
+    new CANSparkMax[] {new CANSparkMax(0, MotorType.kBrushless),new CANSparkMax(0, MotorType.kBrushless),new CANSparkMax(0, MotorType.kBrushless),new CANSparkMax(0, MotorType.kBrushless)}, 
+    new CANSparkMax[] {new CANSparkMax(0, MotorType.kBrushless),new CANSparkMax(0, MotorType.kBrushless),new CANSparkMax(0, MotorType.kBrushless),new CANSparkMax(0, MotorType.kBrushless)}, 
     new CANcoder[] {new CANcoder(0),new CANcoder(0),new CANcoder(0),new CANcoder(0)}, 
-    new ADIS16470_IMU()
+    new ADIS16470_IMU(),
+    new Pose2d(null, null)
   );
   
   @Override
